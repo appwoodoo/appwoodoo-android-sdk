@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+	android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/apiKey"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text=""
+		/>
+
+    <Button
+        android:id="@+id/getSettings"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_remote_settings"
+        />
+    
+    <ListView
+        android:id="@+id/settingList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+    
+</LinearLayout>
