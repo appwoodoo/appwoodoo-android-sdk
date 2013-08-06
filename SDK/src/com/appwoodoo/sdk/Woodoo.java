@@ -92,7 +92,9 @@ public class Woodoo {
 			};
 			@Override
 			protected void onPostExecute(WoodooStatus result) {
-				settingsArrived = true;
+				if (result!=null && result == WoodooStatus.SUCCESS) {
+					settingsArrived = true;
+				}
 				if (delegate!=null) {
 					delegate.woodooArrived(result);
 				}
