@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:+'
+    }
+}
+
+apply plugin: 'android-library'
+archivesBaseName = 'appwoodoo-android-sdk'
+version = 1.0
+group = 'com.appwoodoo'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.0'
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+        }
+    }
+}
+
+//apply from: '../maven_push.gradle'

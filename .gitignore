@@ -17,3 +17,6 @@ Example/gen/
 # Local config files
 local.properties
 *.project
+
+#Gradle things
+.gradle/
