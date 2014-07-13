@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">AppWoodoo</string>
-    <string name="get_remote_settings">Get Remote Settings</string>
+
+    <string name="app_key">AppWoodoo App Key:</string>
+    <string name="gcm_id">Google Cloud Messaging App ID:</string>
+    <string name="do_woodoo">Start Woodoo</string>
 
 </resources>

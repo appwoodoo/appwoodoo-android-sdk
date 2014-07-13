@@ -4,25 +4,34 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19"/>
+
+    <permission android:name="com.appwoodoo.example.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.appwoodoo.example.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
-        <activity
-            android:name="com.appwoodoo.example.MainActivity"
-            android:label="@string/app_name" >
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+
+        <activity android:name="com.appwoodoo.example.MainActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="com.appwoodoo.sdk.push.GCMReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.appwoodoo.sdk"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.appwoodoo.sdk.push.GCMIntentService"/>
+        
     </application>
 
 </manifest>

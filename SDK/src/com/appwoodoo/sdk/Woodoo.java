@@ -8,17 +8,12 @@
 //
 package com.appwoodoo.sdk;
 
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
-import android.os.AsyncTask;
+import com.appwoodoo.sdk.io.SettingsApiHandler;
+import com.appwoodoo.sdk.model.RemoteSetting;
+import com.appwoodoo.sdk.push.PushNotificationHelper;
+import com.appwoodoo.sdk.state.State;
 
 /**
  * The main interface to AppWoodoo
@@ -32,83 +27,32 @@ import android.os.AsyncTask;
 public class Woodoo {
 
 	private static WoodooDelegate delegate;
-	private static ArrayList<RemoteSetting> settings;
-	private static boolean settingsArrived = false;
-	
+
 	public static enum WoodooStatus {ERROR, NETWORK_ERROR, SUCCESS};
 
 	private Woodoo() {}
 
 	public static void takeOff(String appKey) {
+		State.getInstance().setAppKey(appKey);
 		downloadSettings(appKey);
 	}
 
 	public static void takeOffWithCallback(String appKey, WoodooDelegate _delegate) {
+		State.getInstance().setAppKey(appKey);
 		delegate = _delegate;
 		downloadSettings(appKey);
 	}
-	
+
 	private static void downloadSettings(final String appKey) {
-		settingsArrived = false;
-
-		AsyncTask<Void, Void, WoodooStatus> task = new AsyncTask<Void, Void, WoodooStatus>() {
-			@Override
-			protected WoodooStatus doInBackground(Void... params) {
-				WoodooStatus status = WoodooStatus.ERROR;
-				
-				try {
-					URL address = new URL("http://www.appwoodoo.com/api/v1/settings/" + appKey + "/");
-
-					URLConnection con = address.openConnection();
-					con.setConnectTimeout(10000);
-					con.setReadTimeout(10000);
-					InputStream is = con.getInputStream();
-
-			        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			        StringBuilder sb = new StringBuilder();
-
-			        String line = null;
-			        try {
-			            while ((line = reader.readLine()) != null) {
-			                sb.append(line);
-			            }
-			        } catch (IOException e) {
-			        } finally {
-		                is.close();
-			        }
-
-			        settings = RemoteSetting.parseJSON( sb.toString() );
-
-					if (settings!=null) {
-						status = WoodooStatus.SUCCESS;
-					}
-
-				} catch (MalformedURLException e) {
-				} catch (IOException e) {
-					status = WoodooStatus.NETWORK_ERROR;
-				}
-
-				return status;
-			};
-			@Override
-			protected void onPostExecute(WoodooStatus result) {
-				if (result!=null && result == WoodooStatus.SUCCESS) {
-					settingsArrived = true;
-				}
-				if (delegate!=null) {
-					delegate.woodooArrived(result);
-				}
-			}
-		};
-		task.execute((Void) null);
+		SettingsApiHandler.downloadSettings(delegate);
 	}
 
-	public static boolean settingsArrived() {
-		return settingsArrived;
-	}
-	
 	public static ArrayList<String> getKeys() {
-		if (settings == null) { return null; }
+		ArrayList<RemoteSetting> settings = State.getInstance().getSettings();
+
+		if (settings == null) {
+			return null;
+		}
 
 		ArrayList<String> keys = new ArrayList<String>();
 		for (RemoteSetting s : settings) {
@@ -118,63 +62,50 @@ public class Woodoo {
 	}
 
 	public static boolean getBooleanForKey(String key) {
-		if (key==null) { return false; }
-		if (settings == null) { return false; }
-
-		for (RemoteSetting s : settings) {
-			if (s.getKey().contentEquals(key)) {
-				try {
-					Boolean.parseBoolean(s.getValue());
-				} catch(Exception e) {
-				}
-			}
+		String stringVal = getStringForKey(key);
+		try {
+			return Boolean.parseBoolean(stringVal);
+		} catch(Exception e) {
+			return false;
 		}
-
-		return false;
 	}
 	
 	public static float getFloatForKey(String key) {
-		if (key==null) { return 0f; }
-		if (settings == null) { return 0f; }
-
-		for (RemoteSetting s : settings) {
-			if (s.getKey().contentEquals(key)) {
-				try {
-					Float.parseFloat(s.getValue());
-				} catch(Exception e) {
-				}
-			}
+		String stringVal = getStringForKey(key);
+		try {
+			return Float.parseFloat(stringVal);
+		} catch(Exception e) {
+			return 0f;
 		}
-
-		return 0f;
 	}
 
 	public static int getIntegerForKey(String key) {
-		if (key==null) { return 0; }
-		if (settings == null) { return 0; }
-
-		for (RemoteSetting s : settings) {
-			if (s.getKey().contentEquals(key)) {
-				try {
-					Integer.parseInt(s.getValue());
-				} catch(Exception e) {
-				}
-			}
+		String stringVal = getStringForKey(key);
+		try {
+			return Integer.parseInt(stringVal);
+		} catch(Exception e) {
+			return 0;
 		}
-		
-		return 0;
 	}
 
 	public static String getStringForKey(String key) {
 		if (key==null) { return null; }
+
+		ArrayList<RemoteSetting> settings = State.getInstance().getSettings();
+
 		if (settings == null) { return null; }
 
 		for (RemoteSetting s : settings) {
 			if (s.getKey().contentEquals(key)) {
-				return s.getValue();
+				return s.getValue(); 
 			}
 		}
-		return null;
+
+		return "";
 	}
 
+	public static PushNotificationHelper pushNotifications() {
+		return PushNotificationHelper.getInstance();
+	}
+	
 }

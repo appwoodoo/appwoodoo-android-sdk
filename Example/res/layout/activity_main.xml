@@ -5,8 +5,28 @@
     tools:context=".MainActivity"
 	android:orientation="vertical">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_key"
+    />
+    
     <EditText
         android:id="@+id/apiKey"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text=""
+		/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gcm_id"
+    />
+
+    <EditText
+        android:id="@+id/gcmId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -17,7 +37,7 @@
         android:id="@+id/getSettings"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/get_remote_settings"
+        android:text="@string/do_woodoo"
         />
     
     <ListView

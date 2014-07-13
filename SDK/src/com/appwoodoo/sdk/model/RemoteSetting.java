@@ -1,4 +1,4 @@
-package com.appwoodoo.sdk;
+package com.appwoodoo.sdk.model;
 
 import java.util.ArrayList;
 import org.json.JSONArray;
@@ -35,12 +35,11 @@ public class RemoteSetting {
 		try {
 
 			JSONObject json = new JSONObject(jsonString);
-			System.out.println("KEYS!");
 			
 			if (json.has("settings")) {
 
 				JSONArray names = json.getJSONObject("settings").names();
-				
+
 				for (int i=0; i<names.length(); i++) {
 					RemoteSetting woodoo = new RemoteSetting();
 					woodoo.setKey( names.getString(i) );

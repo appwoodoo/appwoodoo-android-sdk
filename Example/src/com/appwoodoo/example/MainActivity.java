@@ -23,6 +23,9 @@ import android.content.SharedPreferences;
  *   1. Add settings on www.appwoodoo.com
  *   2. Run this test app
  *   3. Put your API key in the text field and go!
+ *
+ * For help setting up Google Cloud Messaging and push notifications, check our help
+ * at www.appwoodoo.com or follow the Github repository.
  * 
  * @author wimagguc
  * @since 11.06.13
@@ -30,6 +33,8 @@ import android.content.SharedPreferences;
 public class MainActivity extends Activity implements WoodooDelegate {
 
 	private EditText apiKey;
+	private EditText gcmId;
+
 	private Button getSettingsButton;
 	private ListView settingList;
 	private ArrayAdapter<String> settingListAdapter;
@@ -44,8 +49,9 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// UI SETUP >>>
+		// EXAMPLE APP SETUP: UI >>>
 		apiKey = (EditText) findViewById(R.id.apiKey);
+		gcmId = (EditText) findViewById(R.id.gcmId);
 		getSettingsButton = (Button) findViewById(R.id.getSettings);
 		settingList = (ListView) findViewById(R.id.settingList);
 
@@ -60,11 +66,15 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		});
 		// ^^^
 
-		// CHECK WHETHER WE HAVE AN API KEY STORED ALREADY >>>
+		// EXAMPLE APP SETUP: CHECK WHETHER WE HAVE AN API KEY STORED ALREADY >>>
 		preferences = getSharedPreferences("WoodooSharedPreferences", MODE_PRIVATE);
 		if (preferences != null) {
 			String savedApiKey = preferences.getString("SavedApiKey", "");
 			apiKey.setText(savedApiKey);
+
+			String savedGcmId = preferences.getString("SavedGcmId", "");
+			gcmId.setText(savedGcmId);
+
 			downloadSettings();
 		}
 		// ^^^
@@ -75,6 +85,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		super.onPause();
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("SavedApiKey", String.valueOf(apiKey.getText()) );
+        editor.putString("SavedGcmId", String.valueOf(gcmId.getText()) );
         editor.commit();
 	}
 
@@ -83,8 +94,18 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		settingListItems.clear();
 		settingListAdapter.notifyDataSetChanged();
 
-		Woodoo.takeOffWithCallback(String.valueOf(apiKey.getText()), delegate);
-		
+		String api_key = String.valueOf(apiKey.getText());
+		String gcm_id = String.valueOf(gcmId.getText());
+
+		Woodoo.takeOffWithCallback(api_key, delegate);
+
+		// ADD THE PUSH NOTIFICATIONS TO THIS APP >>>
+		String notificationTitle = getResources().getString(R.string.app_name);
+
+		Woodoo.pushNotifications().setupPushNotification(this, gcm_id, notificationTitle, R.drawable.ic_launcher);
+		Woodoo.pushNotifications().removeAll(getApplicationContext());
+		// ^^^
+
 		getSettingsButton.setEnabled(false);
 	}
 	

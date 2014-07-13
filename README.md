@@ -1,14 +1,22 @@
 # AppWoodoo Android SDK
 
-`v1.0`
+`v2.0`
 
-Configure Android apps remotely without resubmitting it to Google Play: enable extra features, conduct A/B tests or control any other behaviour from the air. __We give you the server and the tools, for free__.
+Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
 In this package you will find the open source AppWoodoo Android SDK together with an example app to try it all out. (Scroll down to see how.)
+
+## This is a semi-release package
+
+This package contains all the necessary code and is a working solution. However, I've been using the deprecated Google Cloud Messaging device support JAR, and so will want to move to be using Google Play services soon.
+
+Furthermore, the code needs some cleanup and I've been lazy with the documentation as well. These shall be updated, though those changes supposed to be non-breaking.
 
 ## Install
 
 To give you full control over your Android application, we provide you the source code of this project as well as a drop-in SDK package. You can therefore add the AppWoodoo SDK either as a Library project, or as a jar file.
+
+Before you start, make sure you have the Google Cloud Messaging device support SDK added to your project. Here is a [download link](https://code.google.com/p/gcm/source/browse/gcm-client-deprecated/dist/gcm.jar).
 
 1. As an SDK
 
@@ -22,7 +30,7 @@ To give you full control over your Android application, we provide you the sourc
 
 ## Integrating the SDK
 
-### Quick start
+### Quick start with the Remote Settings
 
 1. Get an API key on the website: [www.appwoodoo.com](http://www.appwoodoo.com/), and add some remote settings (for example, set "SPLASH_SCREEN_ENABLED") to "false")
 
@@ -44,7 +52,49 @@ To give you full control over your Android application, we provide you the sourc
    Woodoo.getBooleanForKey("SPLASH_SCREEN_ENABLED");
    ```
 
-### Advanced functions
+### Quick start with Android Push Notifications
+
+1. Go to the Google API Console to set up Google Cloud Messaging API. For more help, you can follow our [Android Push Message guide](http://www.appwoodoo.com/help/android-push-message/).
+
+2. Once you obtained the API key and your app's Project Number, you can pass these on within the setupPushNotifications() function, after the Woodoo takeOff:
+
+    ```
+    // AppWoodoo take off as usual 
+    Woodoo.takeOff("YOUR_API_KEY"); 
+
+    // Push notifications setup 
+    Woodoo.pushNotifications().setupPushNotification(this, "YOUR_GCM_PROJECT_NUMBER",
+        "The title of the notifications", R.drawable.notification_icons); 
+
+    // Remove all previous notifications on app start 
+    Woodoo.pushNotifications().removeAll(getApplicationContext());
+    ```
+
+3. Modify your project's AndroidManifest.xml to catch incoming push notifications.
+
+    First, the permissions section (don't forget to replace the YOUR_APP_PACKAGE_NAME strings):
+
+    ```
+    <permission android:name="YOUR_APP_PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="YOUR_APP_PACKAGE_NAME.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    ```
+
+    Then, within the Application node:
+
+    ```
+    <receiver android:name="com.appwoodoo.sdk.push.GCMReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+            <category android:name="com.appwoodoo.sdk"/>
+        </intent-filter>
+    </receiver>
+    <service android:name="com.appwoodoo.sdk.push.GCMIntentService"/>
+    ```
+
+### Some more functions
 
 * Check weather the settings have arrived from the server, before using them:
 
