@@ -82,9 +82,8 @@ public class HttpsClient {
 			e.printStackTrace();
 		}
 
-		HttpEntity entity = response.getEntity();
-
 		try {
+			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity);
 		} catch (Exception e) {
 			return "";
