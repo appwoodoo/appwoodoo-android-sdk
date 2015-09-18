@@ -1,22 +1,15 @@
-# built application files
+.settings
 *.apk
 *.ap_
 
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
-SDK/bin/
-SDK/gen/
-Example/bin/
-Example/gen/
-
-# Local config files
+bin
+target
+gen
 local.properties
-*.project
 
-#Gradle things
-.gradle/
+*.idea/workspace.xml
+*.iml
+
+# Gradle files
+.gradle
+*/build/

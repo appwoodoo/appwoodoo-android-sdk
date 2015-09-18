@@ -1,32 +1,30 @@
 # AppWoodoo Android SDK
 
-`v2.0`
+`v2.1`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
-In this package you will find the open source AppWoodoo Android SDK together with an example app to try it all out. (Scroll down to see how.)
+In this package you will find the open source Appwoodoo Android SDK together with an example app to try it all out. (Scroll down to see how.)
 
-## This is a semi-release package
+## This package
 
-This package contains all the necessary code and is a working solution. However, I've been using the deprecated Google Cloud Messaging device support JAR, and so will want to move to be using Google Play services soon.
+This package contains all the necessary code and is a working solution. (This is the last version where we are using the GCM device support JAR, from the next version on, you will need to use Google Play services.)
 
-Furthermore, the code needs some cleanup and I've been lazy with the documentation as well. These shall be updated, though those changes supposed to be non-breaking.
+## Quick Install
 
-## Install
+1. Make sure you have the Google Cloud Messaging device support SDK added to your project. Here is a [download link](https://github.com/4impact/gcm-maven-repository/raw/master/releases/com/google/android/gcm/gcm/1.0.2/gcm-1.0.2.jar).
 
-To give you full control over your Android application, we provide you the source code of this project as well as a drop-in SDK package. You can therefore add the AppWoodoo SDK either as a Library project, or as a jar file.
+2. Drag & drop the AppwoodooSDK.jar file to the libs folder of your project (next to the gcm.jar file)
 
-Before you start, make sure you have the Google Cloud Messaging device support SDK added to your project. Here is a [download link](https://code.google.com/p/gcm/source/browse/gcm-client-deprecated/dist/gcm.jar).
+3. Make sure the JAR files are included in your app Gradle build:
 
-1. As an SDK
+```
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    ...
+}
 
-   Simply drag & drop the AppWoodooSDK.jar file to the libs folder of your project in Eclipse; or
-
-2. As a Library project
-
-   In Eclipse, right-click on the project name in the left panel. In the Application properties, navigate to Android, add a new Library, select AppWoodooSDK and click Save.
-
-   ![add as library](Docs/library.png)
+```
 
 ## Integrating the SDK
 
@@ -131,9 +129,19 @@ You will find an example application in the 'Example' folder, which you can open
 
    ![example app](Docs/example_app.png)
 
+## Advanced: build your own SDK
+
+To give you full control over your Android application, we provide you the source code of this project as well as a drop-in SDK package. You can therefore build your own Appwoodoo SDK using Gradle build.
+
+You can modify the SDK file, and then run the following script to generate a new package:
+
+```
+$ ./gradlew clean javadocRelease jarRelease
+```
+
 ## About
 
-AppWoodoo is a free service, proudly built by [Tamas Dancsi](http://www.tamasdancsi.com/) and [Richard Dancsi](http://www.wimagguc.com/).
+Appwoodoo is a free service, proudly built by [Tamas Dancsi](http://www.tamasdancsi.com/) and [Richard Dancsi](http://www.wimagguc.com/).
 
 Please feel free to contribute: push back your improvements, or just send an e-mail to info-AT-appwoodoo.com with your ideas and suggestions. Special thanks to [@sianis](https://github.com/sianis/) for already having done so.
 
@@ -143,7 +151,7 @@ Built in [Google Campus](http://www.campuslondon.com/) of London, [Betahaus](htt
 
 Lincesed under The MIT License (MIT)
 
-Copyright (c) 2013 AppWoodoo ([appwoodoo.com](www.appwoodoo.com))
+Copyright (c) 2013-2015 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
