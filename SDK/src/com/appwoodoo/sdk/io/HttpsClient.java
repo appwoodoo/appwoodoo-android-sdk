@@ -1,32 +1,16 @@
 package com.appwoodoo.sdk.io;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.security.KeyStore;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Map;
 
 import android.os.AsyncTask;
 
@@ -51,93 +35,102 @@ public class HttpsClient {
 
 	private HttpsClient() {}
 	
-	public void doPostRequestInBackground(final String url, final List<NameValuePair> postData) {
+	public void doPostRequestInBackground(final String url, final Map<String,Object> params) {
 
 		AsyncTask<Void, Void, String> bgTask = new AsyncTask<Void, Void, String>(){
 			@Override
 			protected String doInBackground(Void... arg0) {
-				return doPostRequest(url, postData);
-			}
+                try {
+                    return doPostRequest(url, params);
+                } catch (IOException e) {
+                    return "";
+                }
+            }
 		};
 		bgTask.execute((Void) null);
 
 	}
 	
-	public String doPostRequest(String url, List<NameValuePair> postData) {
-		HttpClient httpclient = createHttpClient();
-		HttpPost httppost = new HttpPost(url);
+	public String doPostRequest(String urlString, Map<String,Object> params) throws IOException {
+        byte[] postDataBytes;
 
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postData, "UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		HttpResponse response = null;
-		try {
-			response = httpclient.execute(httppost);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            postDataBytes = bytesDataFromParameters(params);
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
 
-		try {
-			HttpEntity entity = response.getEntity();
-			return EntityUtils.toString(entity);
-		} catch (Exception e) {
-			return "";
-		}
+        HttpURLConnection urlConnection = getHttpURLConnection(urlString);
 
+        urlConnection.setDoOutput(true);
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        urlConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        urlConnection.getOutputStream().write(postDataBytes);
+
+        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+        BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = responseStreamReader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        responseStreamReader.close();
+
+        return stringBuilder.toString();
 	}
 
-	public String doGetRequest(String url) throws IOException {
-		HttpClient httpclient = createHttpClient();
-		HttpGet httpget = new HttpGet(url);
+	public String doGetRequest(String urlString) throws IOException {
+        HttpURLConnection urlConnection = getHttpURLConnection(urlString);
 
-		HttpResponse response = null;
-		try {
-			response = httpclient.execute(httpget);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		}
+        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+        BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-		HttpEntity entity = response.getEntity();
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = responseStreamReader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        responseStreamReader.close();
 
-		try {
-			return EntityUtils.toString(entity);
-		} catch (Exception e) {
-			return "";
-		}
-
-	}
-	
-	// TODO now we accept all certificates
-	public static HttpClient createHttpClient() {
-		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-			trustStore.load(null, null);
-
-			SSLSocketFactory socketFactory = new CustomSSLSocketFactory(trustStore);
-			socketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
-			HttpParams params = new BasicHttpParams();
-			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-			HttpConnectionParams.setConnectionTimeout(params, CONNECTION_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(params, SOCKET_TIMEOUT);
-			HttpConnectionParams.setStaleCheckingEnabled(params, true);
-
-			SchemeRegistry registry = new SchemeRegistry();
-			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-			registry.register(new Scheme("https", socketFactory, 443));
-
-			ClientConnectionManager connectionManager = new ThreadSafeClientConnManager(params, registry);
-			return new DefaultHttpClient(connectionManager, params);
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+        return stringBuilder.toString();
 	}
 
+    private HttpURLConnection getHttpURLConnection(String urlString) throws IOException {
+        URL url;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // URL should be hard-coded in the SDK, so we we shouldn't ever be here.
+            // Therefore there is no way to recover from this.
+            throw new IOException();
+        }
+
+        HttpURLConnection httpurlConnection = (HttpURLConnection) url.openConnection();
+
+        httpurlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
+        httpurlConnection.setReadTimeout(SOCKET_TIMEOUT);
+
+        return httpurlConnection;
+    }
+
+    public byte[] bytesDataFromParameters(Map<String,Object> params) throws UnsupportedEncodingException {
+        byte[] postDataBytes;
+
+        StringBuilder postData = new StringBuilder();
+
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+        }
+        postDataBytes = postData.toString().getBytes("UTF-8");
+
+        return postDataBytes;
+    }
 }
