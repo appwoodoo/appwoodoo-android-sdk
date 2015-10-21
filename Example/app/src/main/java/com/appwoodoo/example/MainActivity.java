@@ -4,8 +4,17 @@ import java.util.ArrayList;
 
 import com.appwoodoo.sdk.Woodoo;
 import com.appwoodoo.sdk.WoodooDelegate;
+import com.appwoodoo.sdk.push.WoodooRegistrationIntentService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -55,7 +64,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		getSettingsButton = (Button) findViewById(R.id.getSettings);
 		settingList = (ListView) findViewById(R.id.settingList);
 
-		settingListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingListItems);
+		settingListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, settingListItems);
 		settingList.setAdapter(settingListAdapter);
 
 		getSettingsButton.setOnClickListener(new OnClickListener() {
@@ -102,7 +111,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		// ADD THE PUSH NOTIFICATIONS TO THIS APP >>>
 		String notificationTitle = getResources().getString(R.string.app_name);
 
-		Woodoo.pushNotifications().setupPushNotification(this, gcm_id, notificationTitle, R.mipmap.ic_launcher);
+		Woodoo.pushNotifications().setupPushNotification(this, gcm_id, notificationTitle, R.drawable.ic_push_notification);
 		Woodoo.pushNotifications().removeAll(getApplicationContext());
 		// ^^^
 

@@ -8,23 +8,22 @@ import com.appwoodoo.sdk.state.State;
 
 public class DeviceApiHandler {
 
-	public static void register(String deviceId, String registrationId) {
+	public static void register(String token) {
 		String url = Config.API_ENDPOINT + "push/gcm/register/";
 
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("api_key", State.getInstance().getAppKey());
-		params.put("dev_id", deviceId);
-		params.put("reg_id", registrationId);
+		params.put("reg_id", token);
 
 		HttpsClient.getInstance().doPostRequestInBackground(url, params);
 	}
 
-	public static void unregister(String deviceId) {
+	public static void unregister(String token) {
 		String url = Config.API_ENDPOINT + "push/gcm/unregister/";
 
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("api_key", State.getInstance().getAppKey());
-		params.put("dev_id", deviceId);
+		params.put("reg_id", token);
 
 		HttpsClient.getInstance().doPostRequestInBackground(url, params);
 	}

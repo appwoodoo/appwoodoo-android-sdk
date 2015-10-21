@@ -1,6 +1,6 @@
 # AppWoodoo Android SDK
 
-`v2.1`
+`v2.2`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
@@ -8,19 +8,35 @@ In this package you will find the open source Appwoodoo Android SDK together wit
 
 ## This package
 
-This package contains all the necessary code and is a working solution. (This is the last version where we are using the GCM device support JAR, from the next version on, you will need to use Google Play services.)
+This package contains all the necessary code and is a working solution. (We are now integrating Google Play Services as opposed to the deprecated GCM device support library. If you need help, please see the 'Update from previous versions' section)
+
+## Update from previous versions
+
+If you are updating to the Appwoodoo SDK v2.2 from v2.1 and previous versions, you have to do these two steps:
+
+1. Integrate Google Play Services (by adding it to your Gradle build, for example). Feel free to remove the deprecated GCM device library at this point.
+
+2. Change the AndroidManifest.xml to include the new services and receivers.
 
 ## Quick Install
 
-1. Make sure you have the Google Cloud Messaging device support SDK added to your project. Here is a [download link](https://github.com/4impact/gcm-maven-repository/raw/master/releases/com/google/android/gcm/gcm/1.0.2/gcm-1.0.2.jar).
+1. Make sure you have Google Play Services added to your project. It's as simple as adding this one line to your app Gradle build:
 
-2. Drag & drop the AppwoodooSDK.jar file to the libs folder of your project (next to the gcm.jar file)
-
-3. Make sure the JAR files are included in your app Gradle build:
-
+```java
+dependencies {
+    compile 'com.google.android.gms:play-services:8.1.0'
+    ...
+}
 ```
+
+2. Drag & drop the AppwoodooSDK.jar file to the libs folder of your project.
+
+3. Make sure the Appwoodoo JAR is included in your app Gradle build alongside Play Services:
+
+```java
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services:8.1.0'
     ...
 }
 
@@ -34,29 +50,29 @@ dependencies {
 
 2. Add the following permissions to the AndroidManifest.xml of your app:
 
-   ```
+   ```xml
    <uses-permission android:name="android.permission.INTERNET"/>
    ```
 
 3. Add the takeOff call in the onCreate method of the first Activity:
 
-   ```
+   ```java
    Woodoo.takeOff("YOUR_API_KEY");
    ```
 
 4. Receive the Remote Settings in your app:
 
-   ```
+   ```java
    Woodoo.getBooleanForKey("SPLASH_SCREEN_ENABLED");
    ```
 
 ### Quick start with Android Push Notifications
 
-1. Go to the Google API Console to set up Google Cloud Messaging API. For more help, you can follow our [Android Push Message guide](http://www.appwoodoo.com/help/android-push-message/).
+1. Go to the Google API Console to obtain the Google Cloud Messaging API Key. For more help, you can follow our [Android Push Message guide](http://www.appwoodoo.com/help/android-push-message/).
 
-2. Once you obtained the API key and your app's Project Number, you can pass these on within the setupPushNotifications() function, after the Woodoo takeOff:
+2. Once you have the API Key and your app's Project Number ready, you can pass these on within the setupPushNotifications() function, after the Woodoo takeOff:
 
-    ```
+    ```java
     // AppWoodoo take off as usual 
     Woodoo.takeOff("YOUR_API_KEY"); 
 
@@ -70,9 +86,9 @@ dependencies {
 
 3. Modify your project's AndroidManifest.xml to catch incoming push notifications.
 
-    First, the permissions section (don't forget to replace the YOUR_APP_PACKAGE_NAME strings):
+    First, the permissions section `(don't forget to replace the YOUR_APP_PACKAGE_NAME strings)`:
 
-    ```
+    ```xml
     <permission android:name="YOUR_APP_PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="YOUR_APP_PACKAGE_NAME.permission.C2D_MESSAGE"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -81,22 +97,38 @@ dependencies {
 
     Then, within the Application node:
 
-    ```
-    <receiver android:name="com.appwoodoo.sdk.push.GCMReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+    ```xml
+    <receiver
+        android:name="com.google.android.gms.gcm.GcmReceiver"
+        android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
         <intent-filter>
             <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-            <category android:name="com.appwoodoo.sdk"/>
+            <category android:name="com.appwoodoo.sdk" />
         </intent-filter>
     </receiver>
-    <service android:name="com.appwoodoo.sdk.push.GCMIntentService"/>
+
+    <service android:name="com.appwoodoo.sdk.push.WoodooGcmListenerService" android:exported="false" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        </intent-filter>
+    </service>
+
+    <service android:name="com.appwoodoo.sdk.push.WoodooRegistrationIntentService" android:exported="false"/>
+
+    <service android:name="com.appwoodoo.sdk.push.WoodooInstanceIDListenerService" android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.android.gms.iid.InstanceID"/>
+        </intent-filter>
+    </service>
     ```
 
 ### Some more functions
 
-* Check weather the settings have arrived from the server, before using them:
+* Check whether the settings have arrived from the server:
 
-   ```
+   ```java
    if (Woodoo.settingsArrived()) {
      Woodoo.getBooleanForKey("SPLASH_SCREEN_ENABLED");
    }
@@ -104,7 +136,7 @@ dependencies {
 
 * Use a WoodooDelegate to be notified when the Remote Settings arrive:
 
-   ```
+   ```java
    public class MainActivity extends Activity implements WoodooDelegate {
 
      @Override
@@ -125,7 +157,7 @@ dependencies {
 
 ## Try it out first
 
-You will find an example application in the 'Example' folder, which you can open and run with Eclipse. This app is for testing out AppWoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
+You will find an example application in the 'Example' folder, which you can open and run with Eclipse. This app is for testing out Appwoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
 
    ![example app](Docs/example_app.png)
 
@@ -135,7 +167,7 @@ To give you full control over your Android application, we provide you the sourc
 
 You can modify the SDK file, and then run the following script to generate a new package:
 
-```
+```sh
 $ ./gradlew clean javadocRelease jarRelease
 ```
 

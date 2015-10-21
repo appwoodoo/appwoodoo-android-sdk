@@ -16,7 +16,7 @@ import com.appwoodoo.sdk.push.PushNotificationHelper;
 import com.appwoodoo.sdk.state.State;
 
 /**
- * The main interface to AppWoodoo
+ * The main interface of Appwoodoo
  *
  * Use the methods of this class to get the Woodoo in your app.
  * See the README for details.
@@ -33,8 +33,7 @@ public class Woodoo {
 	private Woodoo() {}
 
 	public static void takeOff(String appKey) {
-		State.getInstance().setAppKey(appKey);
-		downloadSettings(appKey);
+		Woodoo.takeOffWithCallback(appKey, null);
 	}
 
 	public static void takeOffWithCallback(String appKey, WoodooDelegate _delegate) {

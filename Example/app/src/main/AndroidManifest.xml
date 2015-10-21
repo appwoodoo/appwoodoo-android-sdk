@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name">
 
         <activity android:name="com.appwoodoo.example.MainActivity" android:label="@string/app_name">
@@ -22,16 +22,37 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.appwoodoo.sdk.push.GCMReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.appwoodoo.sdk"/>
+                <category android:name="com.appwoodoo.sdk" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.appwoodoo.sdk.push.GCMIntentService"/>
-        
+        <service
+            android:name="com.appwoodoo.sdk.push.WoodooGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.appwoodoo.sdk.push.WoodooRegistrationIntentService"
+            android:exported="false"/>
+
+        <service
+            android:name="com.appwoodoo.sdk.push.WoodooInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
