@@ -106,5 +106,5 @@ public class Woodoo {
 	public static PushNotificationHelper pushNotifications() {
 		return PushNotificationHelper.getInstance();
 	}
-	
+
 }

@@ -9,7 +9,7 @@ buildscript {
 
 apply plugin: 'android-library'
 archivesBaseName = 'appwoodoo-android-sdk'
-version = 2.2
+version = 2.3
 group = 'com.appwoodoo'
 
 android {

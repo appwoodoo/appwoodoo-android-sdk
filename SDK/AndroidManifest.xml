@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appwoodoo.sdk"
     android:versionCode="2"
-    android:versionName="2.2">
+    android:versionName="2.3">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17"/>
 
     <application android:allowBackup="true"/>
 

@@ -1,22 +1,18 @@
-# AppWoodoo Android SDK
+# Appwoodoo Android SDK
 
-`v2.2`
+`v2.3`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
-In this package you will find the open source Appwoodoo Android SDK together with an example app to try it all out. (Scroll down to see how.)
-
-## This package
-
-This package contains all the necessary code and is a working solution. (We are now integrating Google Play Services as opposed to the deprecated GCM device support library. If you need help, please see the 'Update from previous versions' section)
-
 ## Update from previous versions
 
-If you are updating to the Appwoodoo SDK v2.2 from v2.1 and previous versions, you have to do these two steps:
+Nothing to do when updating to Appwoodoo SDK v2.3 from v2.2.
 
-1. Integrate Google Play Services (by adding it to your Gradle build, for example). Feel free to remove the deprecated GCM device library at this point.
+If you are updating to Appwoodoo SDK v2.2 from v2.1 and previous versions, these are the only two steps needed:
 
-2. Change the AndroidManifest.xml to include the new services and receivers.
+1. Integrate Google Play Services if you don't have it added yet. Feel free to remove the deprecated GCM device library at this point.
+
+2. Change the AndroidManifest.xml to include the new services and receivers. No new permissions are needed.
 
 ## Quick Install
 
@@ -155,9 +151,28 @@ dependencies {
    }
    ```
 
+* Disable receiving push notifications
+
+```java
+Woodoo.pushNotifications().disablePushNotifications(getApplicationContext());
+```
+
+* Re-enable push notifications
+
+```java
+Woodoo.pushNotifications().reEnablePushNotifications(getApplicationContext());
+```
+
+* Check whether the user has enabled receiving push notifications
+
+```java
+Woodoo.pushNotifications().pushNotificationsEnabled(getApplicationContext());
+// Returns a boolean
+```
+
 ## Try it out first
 
-You will find an example application in the 'Example' folder, which you can open and run with Eclipse. This app is for testing out Appwoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
+You can find an example application in the 'Example' folder. Open it with Android Studio and run it on any device with Google Play Services enabled. This app is for testing out Appwoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
 
    ![example app](Docs/example_app.png)
 
@@ -173,7 +188,7 @@ $ ./gradlew clean javadocRelease jarRelease
 
 ## About
 
-Appwoodoo is a free service, proudly built by [Tamas Dancsi](http://www.tamasdancsi.com/) and [Richard Dancsi](http://www.wimagguc.com/).
+Appwoodoo is a service proudly built by [Tamas Dancsi](http://www.tamasdancsi.com/) and [Richard Dancsi](http://www.wimagguc.com/).
 
 Please feel free to contribute: push back your improvements, or just send an e-mail to info-AT-appwoodoo.com with your ideas and suggestions. Special thanks to [@sianis](https://github.com/sianis/) for already having done so.
 

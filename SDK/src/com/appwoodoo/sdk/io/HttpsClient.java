@@ -35,22 +35,6 @@ public class HttpsClient {
 
 	private HttpsClient() {}
 	
-	public void doPostRequestInBackground(final String url, final Map<String,Object> params) {
-
-		AsyncTask<Void, Void, String> bgTask = new AsyncTask<Void, Void, String>(){
-			@Override
-			protected String doInBackground(Void... arg0) {
-                try {
-                    return doPostRequest(url, params);
-                } catch (IOException e) {
-                    return "";
-                }
-            }
-		};
-		bgTask.execute((Void) null);
-
-	}
-	
 	public String doPostRequest(String urlString, Map<String,Object> params) throws IOException {
         byte[] postDataBytes;
 

@@ -22,7 +22,7 @@ public final class SharedPreferencesHelper {
 	}
 
 	public SharedPreferences getSharedPreferences(Context context) {
-		if (sp==null) {
+		if (sp == null) {
 			sp = context.getSharedPreferences(PREFERENCES_ID, 0);
 		}
 		return sp;

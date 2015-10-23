@@ -2,9 +2,11 @@ package com.appwoodoo.sdk.push;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.appwoodoo.sdk.io.DeviceApiHandler;
 import com.appwoodoo.sdk.state.State;
+import com.appwoodoo.sdk.storage.SharedPreferencesHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
@@ -26,10 +28,12 @@ public class WoodooRegistrationIntentService extends IntentService {
             return;
         }
 
-		InstanceID instanceID = InstanceID.getInstance(this);
+        SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(getApplicationContext());
+
+        InstanceID instanceID = InstanceID.getInstance(this);
 		try {
 			String token = instanceID.getToken(senderKey, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-			DeviceApiHandler.register(token);
+			DeviceApiHandler.register(token, sp);
 		} catch (IOException e) {}
 	}
 

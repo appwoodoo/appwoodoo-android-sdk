@@ -5,13 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.appwoodoo.sdk.io.DeviceApiHandler;
 import com.appwoodoo.sdk.state.Config;
 import com.appwoodoo.sdk.state.State;
+import com.appwoodoo.sdk.storage.SharedPreferencesHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -41,6 +44,28 @@ public class PushNotificationHelper {
 			Intent intent = new Intent(activity, WoodooRegistrationIntentService.class);
 			activity.startService(intent);
 		}
+	}
+
+	public boolean pushNotificationsEnabled(Context context) {
+        SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
+        Integer enabledInt = SharedPreferencesHelper.getInstance().getStoredInteger(sp, DeviceApiHandler.KEY_PUSH_NOTIFICATIONS_ENABLED);
+        if (enabledInt != null && enabledInt == 0) {
+            return false;
+        }
+		return true;
+	}
+
+	public void disablePushNotifications(Context context) {
+        SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
+        String deviceToken = SharedPreferencesHelper.getInstance().getStoredString(sp, DeviceApiHandler.KEY_DEVICE_TOKEN);
+        DeviceApiHandler.unregister(deviceToken, sp);
+	}
+
+	public void reEnablePushNotifications(Context context) {
+        SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
+        String deviceToken = SharedPreferencesHelper.getInstance().getStoredString(sp, DeviceApiHandler.KEY_DEVICE_TOKEN);
+        SharedPreferencesHelper.getInstance().storeValue(sp, DeviceApiHandler.KEY_PUSH_NOTIFICATIONS_ENABLED, 1);
+        DeviceApiHandler.register(deviceToken, sp);
 	}
 
 	public void showNotification(Context context, String message) {
