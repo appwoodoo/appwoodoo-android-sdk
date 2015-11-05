@@ -43,6 +43,9 @@ public final class SharedPreferencesHelper {
 	}
 
 	public Integer getStoredInteger(SharedPreferences preferences, String key) {
+		if (!preferences.contains(key)) {
+			return null;
+		}
 		return preferences.getInt(key, 0);
 	}
 }

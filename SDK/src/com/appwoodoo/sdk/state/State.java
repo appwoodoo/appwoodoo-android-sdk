@@ -82,7 +82,7 @@ public class State {
 		this.notificationTitle = notificationTitle;
 	}
 
-	public int getNotificationResourceId(Context context) {
+	public Integer getNotificationResourceId(Context context) {
 		if (notificationResourceId == null) {
 			SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
 			notificationResourceId = SharedPreferencesHelper.getInstance().getStoredInteger(sp, "WOODOO_NOTIFICATION_RESOURCE_ID");
