@@ -1,42 +1,45 @@
 # Appwoodoo Android SDK
 
-`v2.3`
+`v2.4`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
-## Update from previous versions
-
-Nothing to do when updating to Appwoodoo SDK v2.3 from v2.2.
-
-If you are updating to Appwoodoo SDK v2.2 from v2.1 and previous versions, these are the only two steps needed:
-
-1. Integrate Google Play Services if you don't have it added yet. Feel free to remove the deprecated GCM device library at this point.
-
-2. Change the AndroidManifest.xml to include the new services and receivers. No new permissions are needed.
-
 ## Quick Install
 
-1. Make sure you have Google Play Services added to your project. It's as simple as adding this one line to your app Gradle build:
+1. Make sure you have Google Play Services and the Appwoodoo package included in your project. It's as simple as adding these two lines to your app-Gradle build:
 
 ```java
 dependencies {
     compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.appwoodoo:appwoodoo:2.4.0'
     ...
 }
 ```
 
-2. Drag & drop the AppwoodooSDK.jar file to the libs folder of your project.
-
-3. Make sure the Appwoodoo JAR is included in your app Gradle build alongside Play Services:
+If the jCenter repository is not included yet, add it in the same build file:
 
 ```java
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services:8.1.0'
+repositories {
+    jcenter()
     ...
 }
-
 ```
+
+## Update from previous versions
+
+* When updating to Appwoodoo SDK v2.4:
+
+Make sure to remove the Appwoodoo.jar file from the libs, and use only Gradle to compile the SDK (see the 'Quick Install' part).
+
+If you still want to use the old jar distribution, please just use the previous version v2.3.1
+
+* Nothing to do when updating to Appwoodoo SDK v2.3 from v2.2.
+
+* If you are updating to Appwoodoo SDK v2.2 or later from v2.1 and previous versions, these are the only two steps needed:
+
+    1. Integrate Google Play Services if you don't have it added yet. Feel free to remove the deprecated GCM device library at this point.
+
+    2. Change the AndroidManifest.xml to include the new services and receivers. No new permissions are needed.
 
 ## Integrating the SDK
 
@@ -183,7 +186,13 @@ To give you full control over your Android application, we provide you the sourc
 You can modify the SDK file, and then run the following script to generate a new package:
 
 ```sh
-$ ./gradlew clean javadocRelease jarRelease
+$ ./gradlew install
+```
+
+If you have access to appwoodoo's Bintray account, set the api_key in the local.settings, and you can upload this package to jCenter right away:
+
+```sh
+$ ./gradlew bintrayUpload
 ```
 
 ## About

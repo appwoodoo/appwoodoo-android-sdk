@@ -1,0 +1,98 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 2
+        versionName version
+    }
+    buildTypes {
+    }
+}
+
+def siteUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk'
+def gitUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk.git'
+
+version = "2.4.0"
+group = 'com.appwoodoo'
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.google.android.gms:play-services:8.1.0'
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                name 'Open-source push notification & remote control service'
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'http://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'appwoodoo'
+                        name 'Richard Dancsi'
+                        email 'info@appwoodoo.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "com.appwoodoo:appwoodoo"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
