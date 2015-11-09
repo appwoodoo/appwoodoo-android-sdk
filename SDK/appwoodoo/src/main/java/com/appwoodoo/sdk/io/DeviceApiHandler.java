@@ -83,7 +83,7 @@ public class DeviceApiHandler {
                 super.onPostExecute(s);
                 if (s != null && sp != null) {
                     ApiResponse ar = ApiResponse.parseJSON(s);
-                    if (ar.getStatus() != null && ar.getStatus() == 200) {
+                    if (ar != null && ar.getStatus() != null && ar.getStatus() == 200) {
                         SharedPreferencesHelper.getInstance().storeValue(sp, KEY_PUSH_NOTIFICATIONS_ENABLED, 0);
                         SharedPreferencesHelper.getInstance().storeValue(sp, DeviceApiHandler.KEY_DEVICE_TOKEN_SUBMITTED, 0);
                     }
