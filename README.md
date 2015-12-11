@@ -1,6 +1,6 @@
 # Appwoodoo Android SDK
 
-`v2.4.2`
+`v2.5.0`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
@@ -11,7 +11,7 @@ Send push messages or remotely configure your app without resubmitting it to Goo
 ```java
 dependencies {
     compile 'com.google.android.gms:play-services:8.3.0'
-    compile 'com.appwoodoo:appwoodoo:2.4.2'
+    compile 'com.appwoodoo:appwoodoo:2.5.0'
     ...
 }
 ```
@@ -124,6 +124,14 @@ If you still want to use the old jar distribution, please just use the previous 
     ```
 
 ### Some more functions
+
+* Pro Tip: if you only want to use push notifications, you can call the following function _instead_ of setupPushNotification(), remove Woodoo.takeOff and that way skip the background networking at every app start:
+
+    ```java
+    // Push notifications setup 
+Woodoo.pushNotifications().setupPushNotificationWithoutRemoteTakeoff("YOUR_API_KEY", this, "YOUR_GCM_PROJECT_NUMBER",
+        "The title of the notifications", R.drawable.notification_icons); 
+    ```
 
 * Check whether the settings have arrived from the server:
 

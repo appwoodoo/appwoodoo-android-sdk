@@ -33,6 +33,13 @@ public class PushNotificationHelper {
 		return _instance;
 	}
 
+    // If you want to use only push notifications without the remote settings, this
+    // speeds the app's launch up a bit
+	public void setupPushNotificationWithoutRemoteTakeoff(String appKey, Activity activity, String gcmSender, String notificationTitle, int notificationIconResource) {
+		State.getInstance().setAppKey(appKey);
+		setupPushNotification(activity, gcmSender, notificationTitle, notificationIconResource);
+	}
+
 	public void setupPushNotification(Activity activity, String gcmSender, String notificationTitle, int notificationIconResource) {
 		State.getInstance().setGcmSender(gcmSender, activity.getApplicationContext());
 		State.getInstance().setNotificationIntentClassName(activity.getClass().getName(), activity.getApplicationContext());
