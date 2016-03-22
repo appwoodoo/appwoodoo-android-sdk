@@ -4,17 +4,8 @@ import java.util.ArrayList;
 
 import com.appwoodoo.sdk.Woodoo;
 import com.appwoodoo.sdk.WoodooDelegate;
-import com.appwoodoo.sdk.push.WoodooRegistrationIntentService;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -26,7 +17,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 
 /**
- * An example app that uses the AppWoodoo SDK.
+ * An example app that uses the Appwoodoo SDK.
  * Downloads and displays the a list of remote settings available for an API key.
  *
  *   1. Add settings on www.appwoodoo.com
@@ -45,9 +36,8 @@ public class MainActivity extends Activity implements WoodooDelegate {
 	private EditText gcmId;
 
 	private Button getSettingsButton;
-	private ListView settingList;
-	private ArrayAdapter<String> settingListAdapter;
-	private ArrayList<String> settingListItems = new ArrayList<String>();
+    private ArrayAdapter<String> settingListAdapter;
+	private ArrayList<String> settingListItems = new ArrayList<>();
 
 	SharedPreferences preferences;
 
@@ -62,7 +52,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		apiKey = (EditText) findViewById(R.id.apiKey);
 		gcmId = (EditText) findViewById(R.id.gcmId);
 		getSettingsButton = (Button) findViewById(R.id.getSettings);
-		settingList = (ListView) findViewById(R.id.settingList);
+        ListView settingList = (ListView) findViewById(R.id.settingList);
 
 		settingListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, settingListItems);
 		settingList.setAdapter(settingListAdapter);
@@ -95,7 +85,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("SavedApiKey", String.valueOf(apiKey.getText()) );
         editor.putString("SavedGcmId", String.valueOf(gcmId.getText()) );
-        editor.commit();
+        editor.apply();
 	}
 
 	// Getting the Woodoo, preparing the UI
@@ -112,6 +102,7 @@ public class MainActivity extends Activity implements WoodooDelegate {
 		String notificationTitle = getResources().getString(R.string.app_name);
 
 		Woodoo.pushNotifications().setupPushNotification(this, gcm_id, notificationTitle, R.drawable.ic_push_notification);
+		Woodoo.pushNotifications().setupPushNotificationSound(this, R.raw.notification_sound);
 		Woodoo.pushNotifications().removeAll(getApplicationContext());
 		// ^^^
 
