@@ -209,9 +209,9 @@ Please feel free to contribute: push back your improvements, or just send an e-m
 
 Built in [Google Campus](http://www.campuslondon.com/) of London, [Betahaus](http://www.betahaus.de/) of Berlin and in several parks and cafes of Vienna.
 
-## Lincese
+## License
 
-Lincesed under The MIT License (MIT)
+Licensed under The MIT License (MIT)
 
 Copyright (c) 2013-2016 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
 
