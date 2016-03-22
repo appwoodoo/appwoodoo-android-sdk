@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 
 public final class SharedPreferencesHelper {
 
-	private static String PREFERENCES_ID = "APPWOODOO_SHARED_PREFERENCES";
-	
 	private static SharedPreferencesHelper _instance;
 	private static SharedPreferences sp;
 
@@ -23,6 +21,7 @@ public final class SharedPreferencesHelper {
 
 	public SharedPreferences getSharedPreferences(Context context) {
 		if (sp == null) {
+			String PREFERENCES_ID = "APPWOODOO_SHARED_PREFERENCES";
 			sp = context.getSharedPreferences(PREFERENCES_ID, 0);
 		}
 		return sp;
@@ -30,12 +29,14 @@ public final class SharedPreferencesHelper {
 
 	public void storeValue(SharedPreferences preferences, String key, Object value) {
 		SharedPreferences.Editor edit = preferences.edit();
-		if (value instanceof String) {
+		if (value == null) {
+			edit.remove(key);
+		} else if (value instanceof String) {
 			edit.putString(key, (String) value);
 		} else if (value instanceof Integer) {
 			edit.putInt(key, (Integer) value);
 		}
-		edit.commit();
+		edit.apply();
 	}
 	
 	public String getStoredString(SharedPreferences preferences, String key) {

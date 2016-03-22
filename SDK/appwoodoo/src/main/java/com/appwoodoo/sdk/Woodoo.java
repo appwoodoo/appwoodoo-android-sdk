@@ -61,38 +61,67 @@ public class Woodoo {
 	}
 
 	public static boolean getBooleanForKey(String key) {
+		return getBooleanForKey(key, false);
+	}
+
+	public static boolean getBooleanForKey(String key, boolean defaultValue) {
 		String stringVal = getStringForKey(key);
 		try {
 			return Boolean.parseBoolean(stringVal);
 		} catch(Exception e) {
-			return false;
-		}
-	}
-	
-	public static float getFloatForKey(String key) {
-		String stringVal = getStringForKey(key);
-		try {
-			return Float.parseFloat(stringVal);
-		} catch(Exception e) {
-			return 0f;
+			return defaultValue;
 		}
 	}
 
-	public static int getIntegerForKey(String key) {
+	public static long getLongForKey(String key) {
+		return getLongForKey(key, 0);
+	}
+
+	public static long getLongForKey(String key, long defaultValue) {
+		String stringVal = getStringForKey(key);
+		try {
+			return Long.parseLong(stringVal);
+		} catch(Exception e) {
+			return defaultValue;
+		}
+	}
+
+    public static float getFloatForKey(String key) {
+        return getFloatForKey(key, 0f);
+    }
+
+    public static float getFloatForKey(String key, float defaultValue) {
+        String stringVal = getStringForKey(key);
+        try {
+            return Float.parseFloat(stringVal);
+        } catch(Exception e) {
+            return defaultValue;
+        }
+    }
+
+    public static int getIntegerForKey(String key) {
+        return getIntegerForKey(key, 0);
+    }
+
+    public static int getIntegerForKey(String key, int defaultValue) {
 		String stringVal = getStringForKey(key);
 		try {
 			return Integer.parseInt(stringVal);
 		} catch(Exception e) {
-			return 0;
+			return defaultValue;
 		}
 	}
 
-	public static String getStringForKey(String key) {
-		if (key==null) { return null; }
+    public static String getStringForKey(String key) {
+        return getStringForKey(key, null);
+    }
+
+    public static String getStringForKey(String key, String defaultValue) {
+		if (key==null) { return defaultValue; }
 
 		ArrayList<RemoteSetting> settings = State.getInstance().getSettings();
 
-		if (settings == null) { return null; }
+		if (settings == null) { return defaultValue; }
 
 		for (RemoteSetting s : settings) {
 			if (s.getKey().contentEquals(key)) {
@@ -100,7 +129,7 @@ public class Woodoo {
 			}
 		}
 
-		return "";
+		return defaultValue;
 	}
 
 	public static PushNotificationHelper pushNotifications() {
