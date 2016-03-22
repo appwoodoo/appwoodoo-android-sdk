@@ -1,8 +1,13 @@
 # Appwoodoo Android SDK
 
-`v2.5.0`
+`v2.6.0`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
+
+## What's new?
+
+* Support to set your own notification sounds
+* Remote settings with fallback values
 
 ## Quick Install
 
@@ -10,8 +15,8 @@ Send push messages or remotely configure your app without resubmitting it to Goo
 
 ```java
 dependencies {
-    compile 'com.google.android.gms:play-services:8.3.0'
-    compile 'com.appwoodoo:appwoodoo:2.5.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.appwoodoo:appwoodoo:2.6.0'
     ...
 }
 ```
@@ -24,22 +29,6 @@ repositories {
     ...
 }
 ```
-
-## Update from previous versions
-
-* When updating to Appwoodoo SDK v2.4.1 or later:
-
-Make sure to remove the Appwoodoo.jar file from the libs, and use only Gradle to compile the SDK (see the 'Quick Install' part).
-
-If you still want to use the old jar distribution, please just use the previous version v2.3.1
-
-* Nothing to do when updating to Appwoodoo SDK v2.3 from v2.2.
-
-* If you are updating to Appwoodoo SDK v2.2 or later from v2.1 and previous versions, these are the only two steps needed:
-
-    1. Integrate Google Play Services if you don't have it added yet. Feel free to remove the deprecated GCM device library at this point.
-
-    2. Change the AndroidManifest.xml to include the new services and receivers. No new permissions are needed.
 
 ## Integrating the SDK
 
@@ -78,6 +67,9 @@ If you still want to use the old jar distribution, please just use the previous 
     // Push notifications setup 
     Woodoo.pushNotifications().setupPushNotification(this, "YOUR_GCM_PROJECT_NUMBER",
         "The title of the notifications", R.drawable.notification_icons); 
+
+    // Set your own notification sound (copy the mp3 to /res/raw)
+    Woodoo.pushNotifications().setupPushNotificationSound(this, R.raw.notification_sound);
 
     // Remove all previous notifications on app start 
     Woodoo.pushNotifications().removeAll(getApplicationContext());
@@ -132,6 +124,12 @@ If you still want to use the old jar distribution, please just use the previous 
 Woodoo.pushNotifications().setupPushNotificationWithoutRemoteTakeoff("YOUR_API_KEY", this, "YOUR_GCM_PROJECT_NUMBER",
         "The title of the notifications", R.drawable.notification_icons); 
     ```
+
+* To reset the sound to system default for the upcoming push notifications
+
+    ```java
+    Woodoo.pushNotifications().setupPushNotificationSoundToDefault(this);
+   ```
 
 * Check whether the settings have arrived from the server:
 
@@ -215,7 +213,7 @@ Built in [Google Campus](http://www.campuslondon.com/) of London, [Betahaus](htt
 
 Lincesed under The MIT License (MIT)
 
-Copyright (c) 2013-2015 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
+Copyright (c) 2013-2016 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

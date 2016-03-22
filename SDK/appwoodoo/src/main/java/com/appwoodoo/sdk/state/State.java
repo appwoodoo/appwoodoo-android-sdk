@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.appwoodoo.sdk.model.RemoteSetting;
 import com.appwoodoo.sdk.storage.SharedPreferencesHelper;
@@ -15,6 +16,7 @@ public class State {
 	private String notificationIntentClassName;
 	private String notificationTitle;
 	private Integer notificationResourceId;
+	private String notificationSound;
 
 	private ArrayList<RemoteSetting> settings;
 	private boolean settingsArrived = false;
@@ -95,7 +97,21 @@ public class State {
 		SharedPreferencesHelper.getInstance().storeValue(sp, "WOODOO_NOTIFICATION_RESOURCE_ID", notificationResourceId);
 		this.notificationResourceId = notificationResourceId;
 	}
-	
+
+	public String getNotificationSound(Context context) {
+		if (notificationSound == null) {
+			SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
+			notificationSound = SharedPreferencesHelper.getInstance().getStoredString(sp, "WOODOO_NOTIFICATION_SOUND_URI");
+		}
+		return notificationSound;
+	}
+
+	public void setNotificationSound(String notificationSound, Context context) {
+		SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
+		SharedPreferencesHelper.getInstance().storeValue(sp, "WOODOO_NOTIFICATION_SOUND_URI", notificationSound);
+		this.notificationSound = notificationSound;
+	}
+
 	public void setSettingsArrived(boolean settingsArrived) {
 		this.settingsArrived = settingsArrived;
 	}

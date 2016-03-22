@@ -53,7 +53,16 @@ public class PushNotificationHelper {
 		}
 	}
 
-	public boolean pushNotificationsEnabled(Context context) {
+	public void setupPushNotificationSoundToDefault(Activity activity) {
+		State.getInstance().setNotificationSound(null, activity.getApplicationContext());
+	}
+
+    public void setupPushNotificationSound(Activity activity, int notificationSoundResource) {
+        String soundUri = "android.resource://" + activity.getPackageName() + "/" + notificationSoundResource;
+        State.getInstance().setNotificationSound(soundUri, activity.getApplicationContext());
+    }
+
+    public boolean pushNotificationsEnabled(Context context) {
         SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
         Integer enabledInt = SharedPreferencesHelper.getInstance().getStoredInteger(sp, DeviceApiHandler.KEY_PUSH_NOTIFICATIONS_ENABLED);
         if (enabledInt != null && enabledInt == 0) {
@@ -81,6 +90,11 @@ public class PushNotificationHelper {
                         .setSmallIcon(State.getInstance().getNotificationResourceId(context))
                         .setContentTitle(State.getInstance().getNotificationTitle(context))
                         .setContentText(message);
+
+        String soundString = State.getInstance().getNotificationSound(context);
+        if (soundString != null) {
+            builder.setSound( Uri.parse(soundString) );
+        }
 
 		try {
 			ClassLoader cl = context.getClassLoader();
