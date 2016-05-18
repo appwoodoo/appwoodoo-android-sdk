@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.appwoodoo.sdk.BuildConfig;
 import com.appwoodoo.sdk.io.DeviceApiHandler;
 import com.appwoodoo.sdk.state.Config;
 import com.appwoodoo.sdk.state.State;
@@ -116,7 +117,9 @@ public class PushNotificationHelper {
 			notificationManager.notify(Config.NOTIFICATION_REQCODE, builder.build());
 
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			if (BuildConfig.DEBUG) {
+				e.printStackTrace();
+			}
 		}
 
 	}

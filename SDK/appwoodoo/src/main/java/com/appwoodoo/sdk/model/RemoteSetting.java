@@ -1,5 +1,7 @@
 package com.appwoodoo.sdk.model;
 
+import com.appwoodoo.sdk.BuildConfig;
+
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +53,9 @@ public class RemoteSetting {
 			}
 
 		} catch(Exception e) {
-			e.printStackTrace();
+			if (BuildConfig.DEBUG) {
+				e.printStackTrace();
+			}
 		}
 		
 		return woodoos;
