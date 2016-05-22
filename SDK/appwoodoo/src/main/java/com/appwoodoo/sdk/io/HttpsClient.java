@@ -14,6 +14,8 @@ import java.util.Map;
 
 import android.os.AsyncTask;
 
+import com.appwoodoo.sdk.BuildConfig;
+
 public class HttpsClient {
 
 	// until a connection is established (in millis)
@@ -86,7 +88,9 @@ public class HttpsClient {
         try {
             url = new URL(urlString);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
             // URL should be hard-coded in the SDK, so we we shouldn't ever be here.
             // Therefore there is no way to recover from this.
             throw new IOException();
