@@ -6,8 +6,14 @@ Send push messages or remotely configure your app without resubmitting it to Goo
 
 ## What's new?
 
+* Initial StoryWall feature
 * Support to set your own notification sounds
-* Remote settings with fallback values
+
+## Try it out first
+
+You can find an example application in the 'Example' folder. Open it with Android Studio and run it on any device with Google Play Services enabled. This app is for testing out Appwoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
+
+   ![example app](Docs/example_app.png)
 
 ## Quick Install
 
@@ -224,12 +230,6 @@ Woodoo.pushNotifications().reEnablePushNotifications(getApplicationContext());
 Woodoo.pushNotifications().pushNotificationsEnabled(getApplicationContext());
 // Returns a boolean
 ```
-
-## Try it out first
-
-You can find an example application in the 'Example' folder. Open it with Android Studio and run it on any device with Google Play Services enabled. This app is for testing out Appwoodoo - simply register on the website, get an API key, and check what remote settings are available for your app.
-
-   ![example app](Docs/example_app.png)
 
 ## Advanced: build your own SDK
 
