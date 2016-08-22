@@ -94,6 +94,8 @@ public class SettingsFragment extends Fragment implements WoodooDelegate {
                 apiKey.setInputType(InputType.TYPE_NULL);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(apiKey.getWindowToken(), 0);
+            } else {
+                apiKey.setInputType(InputType.TYPE_CLASS_TEXT);
             }
         }
     }

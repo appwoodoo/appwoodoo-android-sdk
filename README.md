@@ -1,6 +1,6 @@
 # Appwoodoo Android SDK
 
-`v3.0.0`
+`v3.0.1`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
@@ -15,8 +15,8 @@ Send push messages or remotely configure your app without resubmitting it to Goo
 
 ```java
 dependencies {
-    compile 'com.google.android.gms:play-services:9.2.0'
-    compile 'com.appwoodoo:appwoodoo:3.0.0'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.appwoodoo:appwoodoo:3.0.1'
     ...
 }
 ```
@@ -60,13 +60,13 @@ You can add the story wall to any Android app in three simple steps.
 
 * 1. Add the activity for the story in the Android manifest:
 
-```
+```xml
 <activity android:name="com.appwoodoo.sdk.stories.StoryActivity" android:label="@string/app_name"/>
 ```
 
 * 2. ...then make sure to retrieve the stories data (after the callback call):
 
-```
+```java
 Woodoo.takeOff(api_key);
 ...
 Woodoo.stories().init(getActivity());
@@ -74,7 +74,7 @@ Woodoo.stories().init(getActivity());
 
 * 3. ...and finally include, the stories fragment where you want it to appear in your app:
 
-```
+```java
 Woodoo.stories().getFragment()
 ```
 
@@ -82,7 +82,7 @@ Woodoo.stories().getFragment()
 
 * `Pro Tip`: you can edit the colours of the listView by changing the view options:
 
-```
+```java
 Woodoo.stories().getViewOptions().setStoryWallBackgroundColour("#F1F1F1");       Woodoo.stories().getViewOptions().setStoryWallCellDateColour("#999999");
 Woodoo.stories().getViewOptions().setStoryWallCellDividerColour("#CCCCCC");
 Woodoo.stories().getViewOptions().setStoryWallCellTextColour("#999999");
@@ -93,7 +93,7 @@ Woodoo.stories().getViewOptions().setStoryWallCellHeight(240);
 
 * `Pro Tip`: You can directly access the StoryWall data in case you want to create your own ListViews and elements. For example, to retrieve the stories or the title:
 
-```
+```java
 StoryWall sw = Woodoo.stories().getStoryWall(getApplicationContext());
 
 String title = sw.getTitle();
