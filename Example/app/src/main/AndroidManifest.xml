@@ -13,7 +13,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name">
+    <application android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <activity android:name="com.appwoodoo.example.MainActivity" android:label="@string/app_name">
             <intent-filter>
@@ -21,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.appwoodoo.sdk.stories.StoryActivity" android:label="@string/app_name"/>
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

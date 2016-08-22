@@ -1,6 +1,6 @@
 # Appwoodoo Android SDK
 
-`v2.6.0`
+`v3.0.0`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
@@ -15,8 +15,8 @@ Send push messages or remotely configure your app without resubmitting it to Goo
 
 ```java
 dependencies {
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.appwoodoo:appwoodoo:2.6.0'
+    compile 'com.google.android.gms:play-services:9.2.0'
+    compile 'com.appwoodoo:appwoodoo:3.0.0'
     ...
 }
 ```
@@ -53,6 +53,52 @@ repositories {
    ```java
    Woodoo.getBooleanForKey("SPLASH_SCREEN_ENABLED");
    ```
+
+### Quick start with the StoryWall
+
+You can add the story wall to any Android app in three simple steps.
+
+* 1. Add the activity for the story in the Android manifest:
+
+```
+<activity android:name="com.appwoodoo.sdk.stories.StoryActivity" android:label="@string/app_name"/>
+```
+
+* 2. ...then make sure to retrieve the stories data (after the callback call):
+
+```
+Woodoo.takeOff(api_key);
+...
+Woodoo.stories().init(getActivity());
+```
+
+* 3. ...and finally include, the stories fragment where you want it to appear in your app:
+
+```
+Woodoo.stories().getFragment()
+```
+
+* Now you can edit the list of stories to appear in your app on [appwoodoo.com](http://www.appwoodoo.com/)
+
+* `Pro Tip`: you can edit the colours of the listView by changing the view options:
+
+```
+Woodoo.stories().getViewOptions().setStoryWallBackgroundColour("#F1F1F1");       Woodoo.stories().getViewOptions().setStoryWallCellDateColour("#999999");
+Woodoo.stories().getViewOptions().setStoryWallCellDividerColour("#CCCCCC");
+Woodoo.stories().getViewOptions().setStoryWallCellTextColour("#999999");
+Woodoo.stories().getViewOptions().setStoryWallCellTitleColour("#000000");
+Woodoo.stories().getViewOptions().setStoryWallForegroundColour("#CCCCCC");
+Woodoo.stories().getViewOptions().setStoryWallCellHeight(240);
+```
+
+* `Pro Tip`: You can directly access the StoryWall data in case you want to create your own ListViews and elements. For example, to retrieve the stories or the title:
+
+```
+StoryWall sw = Woodoo.stories().getStoryWall(getApplicationContext());
+
+String title = sw.getTitle();
+ArrayList<Story> stories = sw.getStories();
+```
 
 ### Quick start with Android Push Notifications
 
@@ -117,7 +163,7 @@ repositories {
 
 ### Some more functions
 
-* Pro Tip: if you only want to use push notifications, you can call the following function _instead_ of setupPushNotification(), remove Woodoo.takeOff and that way skip the background networking at every app start:
+* `Pro Tip`: if you only want to use push notifications, you can call the following function _instead_ of setupPushNotification(), remove Woodoo.takeOff and that way skip the background networking at every app start:
 
     ```java
     // Push notifications setup 

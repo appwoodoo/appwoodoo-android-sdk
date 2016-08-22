@@ -3,12 +3,12 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.2"
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 2
+        targetSdkVersion 24
+        versionCode 3
         versionName version
     }
     buildTypes {
@@ -18,12 +18,12 @@ android {
 def siteUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk'
 def gitUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk.git'
 
-version = "2.6.0"
+version = "3.0.0"
 group = 'com.appwoodoo'
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.google.android.gms:play-services:9.2.0'
 }
 
 install {

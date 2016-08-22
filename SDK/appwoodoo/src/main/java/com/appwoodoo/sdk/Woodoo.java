@@ -14,6 +14,7 @@ import com.appwoodoo.sdk.io.SettingsApiHandler;
 import com.appwoodoo.sdk.model.RemoteSetting;
 import com.appwoodoo.sdk.push.PushNotificationHelper;
 import com.appwoodoo.sdk.state.State;
+import com.appwoodoo.sdk.stories.StoriesHelper;
 
 /**
  * The main interface of Appwoodoo
@@ -134,6 +135,10 @@ public class Woodoo {
 
 	public static PushNotificationHelper pushNotifications() {
 		return PushNotificationHelper.getInstance();
+	}
+
+	public static StoriesHelper stories() {
+		return StoriesHelper.getInstance();
 	}
 
 }
