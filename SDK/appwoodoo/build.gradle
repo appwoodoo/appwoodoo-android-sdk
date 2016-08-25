@@ -18,12 +18,12 @@ android {
 def siteUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk'
 def gitUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk.git'
 
-version = "3.0.1"
+version = "3.0.2"
 group = 'com.appwoodoo'
 
 dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
 }
 
 install {
