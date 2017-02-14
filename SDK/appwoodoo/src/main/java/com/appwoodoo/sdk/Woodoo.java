@@ -10,6 +10,7 @@ package com.appwoodoo.sdk;
 
 import java.util.ArrayList;
 
+import com.appwoodoo.sdk.dialogs.DialogsHelper;
 import com.appwoodoo.sdk.io.SettingsApiHandler;
 import com.appwoodoo.sdk.model.RemoteSetting;
 import com.appwoodoo.sdk.push.PushNotificationHelper;
@@ -139,6 +140,10 @@ public class Woodoo {
 
 	public static StoriesHelper stories() {
 		return StoriesHelper.getInstance();
+	}
+
+	public static DialogsHelper dialogs() {
+		return DialogsHelper.getInstance();
 	}
 
 }

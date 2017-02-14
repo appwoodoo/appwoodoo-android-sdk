@@ -32,7 +32,7 @@ public class DeviceApiHandler {
             return;
         }
 
-        final String url = Config.API_ENDPOINT + "push/gcm/register/";
+        final String url = Config.API_ENDPOINT + "push/gcm/register/" + State.getInstance().getAppKey() + "/";
 
 		final Map<String,Object> params = new LinkedHashMap<>();
 		params.put("api_key", State.getInstance().getAppKey());
@@ -50,7 +50,7 @@ public class DeviceApiHandler {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                if (s != null && sp != null) {
+                if (s != null) {
                     ApiResponse ar = ApiResponse.parseJSON(s);
                     if (ar != null && ar.getStatus() != null && ar.getStatus() == 200) {
                         SharedPreferencesHelper.getInstance().storeValue(sp, KEY_DEVICE_TOKEN, token);
@@ -63,7 +63,7 @@ public class DeviceApiHandler {
 	}
 
 	public static void unregister(final String token, final SharedPreferences sp) {
-		final String url = Config.API_ENDPOINT + "push/gcm/unregister/";
+		final String url = Config.API_ENDPOINT + "push/gcm/unregister/" + State.getInstance().getAppKey() + "/";
 
 		final Map<String,Object> params = new LinkedHashMap<>();
 		params.put("api_key", State.getInstance().getAppKey());
