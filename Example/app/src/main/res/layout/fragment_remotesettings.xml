@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/tabs_remoteconfig"
+        android:textAppearance="@style/WoodooTitle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/remoteconfig_subtitle"
+        android:textAppearance="@style/WoodooSubTitle"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:background="#00000000"
+        android:cacheColorHint="@null"
+        android:layout_height="0dp"
+        android:isScrollContainer="true"
+        android:descendantFocusability="blocksDescendants"
+        android:drawSelectorOnTop="true"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"/>
+
+</LinearLayout>

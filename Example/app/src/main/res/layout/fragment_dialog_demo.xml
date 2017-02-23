@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/tabs_dialogs"
+        android:textAppearance="@style/WoodooTitle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/dialog_subtitle"
+        android:textAppearance="@style/WoodooSubTitle"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:background="#00000000"
+        android:cacheColorHint="@null"
+        android:isScrollContainer="true"
+        android:overScrollMode="never"
+        android:descendantFocusability="blocksDescendants"
+        android:drawSelectorOnTop="true"
+        android:clipToPadding="false"
+        android:dividerHeight="0dp"
+        android:divider="@null"/>
+
+</LinearLayout>

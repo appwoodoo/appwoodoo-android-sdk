@@ -3,6 +3,7 @@ package com.appwoodoo.sdk.io;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import com.appwoodoo.sdk.BuildConfig;
 import com.appwoodoo.sdk.Woodoo;
 import com.appwoodoo.sdk.WoodooDialogDelegate;
 import com.appwoodoo.sdk.model.ApiResponse;
@@ -27,8 +28,8 @@ public class DialogsApiHandler {
                 try {
                     return HttpsClient.getInstance().doGetRequest(url);
                 } catch (IOException e) {
-                    if (delegate != null) {
-                        delegate.woodooDialogArrived(Woodoo.WoodooStatus.NETWORK_ERROR);
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace();
                     }
                     return null;
                 }
@@ -45,9 +46,8 @@ public class DialogsApiHandler {
                     if (delegate != null) {
                         delegate.woodooDialogArrived(Woodoo.WoodooStatus.SUCCESS);
                     }
-                    return;
                 }
-                if (delegate != null) {
+                else if (delegate != null) {
                     delegate.woodooDialogArrived(Woodoo.WoodooStatus.ERROR);
                 }
             }

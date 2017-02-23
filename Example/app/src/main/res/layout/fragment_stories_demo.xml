@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/tabs_stories"
+        android:textAppearance="@style/WoodooTitle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/stories_subtitle"
+        android:textAppearance="@style/WoodooSubTitle"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/gfx_line"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/gfx_scissors"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

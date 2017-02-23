@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/appwoodoo_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:id="@+id/textSection1"
+            android:paddingTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_text_section1"
+            android:textSize="17sp"
+            android:textColorLink="#0068dd"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/textSection2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/home_text_section2"
+            android:textSize="17sp"
+            android:textColorLink="#0068dd"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/textSection3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:text="@string/home_text_section3"
+            android:textColorLink="#0068dd"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:src="@drawable/appwoodoo_logo"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_height="60dp"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/debug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#80ffffff"
+        />
+
+</LinearLayout>

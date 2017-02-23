@@ -1,11 +1,12 @@
 # Appwoodoo Android SDK
 
-`v3.0.2`
+`v3.2.0`
 
 Send push messages or remotely configure your app without resubmitting it to Google Play or the App Store. Conduct A/B tests or control any behaviour from the air. **We give you the server and awesome open source SDKs.**
 
 ## What's new?
 
+* A brand new (work-in-progress) example app
 * Initial StoryWall feature
 * Support to set your own notification sounds
 
@@ -21,8 +22,8 @@ You can find an example application in the 'Example' folder. Open it with Androi
 
 ```java
 dependencies {
-    compile 'com.google.android.gms:play-services-gcm:9.4.0'
-    compile 'com.appwoodoo:appwoodoo:3.0.2'
+    compile 'com.google.android.gms:play-services-gcm:10.2.0'
+    compile 'com.appwoodoo:appwoodoo:3.2.0'
     ...
 }
 ```
@@ -259,7 +260,7 @@ Built in [Google Campus](http://www.campuslondon.com/) of London, [Betahaus](htt
 
 Licensed under The MIT License (MIT)
 
-Copyright (c) 2013-2016 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
+Copyright (c) 2013-2017 Appwoodoo ([appwoodoo.com](www.appwoodoo.com))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

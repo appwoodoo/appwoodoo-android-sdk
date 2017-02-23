@@ -6,9 +6,9 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 25
-        versionCode 4
+        versionCode 6
         versionName version
     }
     buildTypes {
@@ -18,12 +18,12 @@ android {
 def siteUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk'
 def gitUrl = 'https://github.com/appwoodoo/appwoodoo-android-sdk.git'
 
-version = "3.1.0"
+version = "3.2.0"
 group = 'com.appwoodoo'
 
 dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.google.android.gms:play-services-gcm:10.0.1'
+    compile 'com.google.android.gms:play-services-gcm:10.2.0'
 }
 
 install {

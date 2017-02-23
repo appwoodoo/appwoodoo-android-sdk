@@ -51,7 +51,8 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
 
         if (convertView == null) {
             int height = StoriesHelper.getInstance().getViewOptions().getStoryWallCellHeight();
-            Typeface typeface = StoriesHelper.getInstance().getViewOptions().getStoryWallCellTypeface();
+            Typeface cellTypeface = StoriesHelper.getInstance().getViewOptions().getStoryWallCellTypeface();
+            Typeface titleTypeface = StoriesHelper.getInstance().getViewOptions().getStoryWallTitleTypeface();
 
             RelativeLayout relativeLayout = new RelativeLayout(context);
             relativeLayout.setBackgroundColor(StoriesHelper.getInstance().getViewOptions().getStoryWallBackgroundColour());
@@ -72,8 +73,8 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
             holder.title.setSingleLine();
             holder.title.setEllipsize(TextUtils.TruncateAt.END);
             holder.title.setTextColor( StoriesHelper.getInstance().getViewOptions().getStoryWallCellTitleColour() );
-            if (typeface != null) {
-                holder.title.setTypeface(typeface);
+            if (titleTypeface != null) {
+                holder.title.setTypeface(titleTypeface);
             }
             relativeLayout.addView(holder.title);
 
@@ -87,8 +88,8 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
             holder.lead.setLines( (int) Math.floor((height-100) / 42) );
             holder.lead.setEllipsize(TextUtils.TruncateAt.END);
             holder.lead.setTextColor( StoriesHelper.getInstance().getViewOptions().getStoryWallCellTextColour() );
-            if (typeface != null) {
-                holder.lead.setTypeface(typeface);
+            if (cellTypeface != null) {
+                holder.lead.setTypeface(cellTypeface);
             }
             relativeLayout.addView(holder.lead);
 
@@ -100,8 +101,8 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
             holder.date.setGravity(Gravity.BOTTOM);
             holder.date.setTextSize(10);
             holder.date.setTextColor( StoriesHelper.getInstance().getViewOptions().getStoryWallCellDateColour() );
-            if (typeface != null) {
-                holder.date.setTypeface(typeface);
+            if (cellTypeface != null) {
+                holder.date.setTypeface(cellTypeface);
             }
             relativeLayout.addView(holder.date);
 

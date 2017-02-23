@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.os.AsyncTask;
 
+import com.appwoodoo.sdk.BuildConfig;
 import com.appwoodoo.sdk.WoodooDelegate;
 import com.appwoodoo.sdk.Woodoo.WoodooStatus;
 import com.appwoodoo.sdk.model.RemoteSetting;
@@ -27,6 +28,9 @@ public class SettingsApiHandler {
 				try {
 					response = HttpsClient.getInstance().doGetRequest(url);
 				} catch (IOException e) {
+					if (BuildConfig.DEBUG) {
+						e.printStackTrace();
+					}
 					return WoodooStatus.NETWORK_ERROR;
 				}
 

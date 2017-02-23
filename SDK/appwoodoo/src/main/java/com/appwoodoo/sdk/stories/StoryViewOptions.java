@@ -11,6 +11,7 @@ public class StoryViewOptions {
     private int storyWallCellTitleColour = Color.BLACK;
     private int storyWallCellTextColour = Color.DKGRAY;
     private int storyWallCellDateColour = Color.LTGRAY;
+    private Typeface storyWallTitleTypeface;
     private Typeface storyWallCellTypeface;
     private int storyWallCellHeight = 240;
 
@@ -60,6 +61,14 @@ public class StoryViewOptions {
 
     public void setStoryWallCellTextColour(String hexColour) {
         this.storyWallCellTextColour = Color.parseColor(hexColour);
+    }
+
+    public Typeface getStoryWallTitleTypeface() {
+        return storyWallTitleTypeface;
+    }
+
+    public void setStoryWallTitleTypeface(Typeface storyWallTitleTypeface) {
+        this.storyWallTitleTypeface = storyWallTitleTypeface;
     }
 
     public Typeface getStoryWallCellTypeface() {

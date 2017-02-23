@@ -5,6 +5,24 @@
 
     <string name="app_key">Appwoodoo App Key:</string>
     <string name="gcm_id">Google Cloud Messaging App ID:</string>
-    <string name="do_woodoo">Start Woodoo</string>
+    <string name="save_settings">Save Settings</string>
+
+    <string name="tabs_home">Home</string>
+    <string name="tabs_stories">Stories</string>
+    <string name="tabs_dialogs">Dialogs</string>
+    <string name="tabs_remoteconfig">RemoteConfig</string>
+    <string name="tabs_yoursettings">Settings</string>
+
+    <string name="dialog_subtitle">Tap on any of the titles below to launch the dialog.</string>
+    <string name="remoteconfig_subtitle">Change these settings on appwoodoo.com</string>
+    <string name="stories_subtitle">You can add the list of stories anywhere in the app</string>
+
+    <string name="yoursettings_subtitle">Add your own Appwoodoo key and GCM app id to edit the content of this app</string>
+
+    <string name="get_appwoodoo">Sign up for Appwoodoo</string>
+
+    <string name="home_text_section1">Appwoodoo is the simplest way to add an admin panel to existing or new apps, to edit their content.</string>
+    <string name="home_text_section2"><![CDATA[This demo is <a href="http://www.github.com/appwoodoo/">open source</a> as is the SDK.]]></string>
+    <string name="home_text_section3"><![CDATA[Learn more & <a href="http://www.appwoodoo.com/">sign up</a> here]]></string>
 
 </resources>
