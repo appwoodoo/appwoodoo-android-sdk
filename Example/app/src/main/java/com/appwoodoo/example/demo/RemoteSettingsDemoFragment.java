@@ -30,9 +30,9 @@ public class RemoteSettingsDemoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_remotesettings, container, false);
 
-        ListView settingList = (ListView) rootView.findViewById(R.id.listView);
-        settingListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settingListItems);
-        settingList.setAdapter(settingListAdapter);
+        ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        settingListAdapter = new RemoteSettingsListAdapter(getActivity(), settingListItems);
+        listView.setAdapter(settingListAdapter);
 
         setupUI();
 
@@ -50,7 +50,7 @@ public class RemoteSettingsDemoFragment extends Fragment {
         if (keys != null) {
             settingListItems.clear();
             for (String key : keys) {
-                settingListItems.add( key + " - " + Woodoo.getStringForKey(key) );
+                settingListItems.add(key);
             }
             settingListAdapter.notifyDataSetChanged();
         }

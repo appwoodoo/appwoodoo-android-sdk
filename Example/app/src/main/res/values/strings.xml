@@ -13,8 +13,8 @@
     <string name="tabs_remoteconfig">RemoteConfig</string>
     <string name="tabs_yoursettings">Settings</string>
 
-    <string name="dialog_subtitle">Tap on any of the titles below to launch the dialog.</string>
-    <string name="remoteconfig_subtitle">Change these settings on appwoodoo.com</string>
+    <string name="dialog_subtitle">Tap on any of the titles below to launch the dialog</string>
+    <string name="remoteconfig_subtitle">You can add and schedule settings, and connect event handlers to those in the app</string>
     <string name="stories_subtitle">You can add the list of stories anywhere in the app</string>
 
     <string name="yoursettings_subtitle">Add your own Appwoodoo key and GCM app id to edit the content of this app</string>

@@ -2,7 +2,9 @@ package com.appwoodoo.example.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,11 +50,22 @@ public class SettingsFragment extends Fragment {
         apiKey = (EditText) rootView.findViewById(R.id.apiKey);
         gcmId = (EditText) rootView.findViewById(R.id.gcmId);
         Button getSettingsButton = (Button) rootView.findViewById(R.id.getSettings);
+        Button getAppwoodoo = (Button) rootView.findViewById(R.id.getAppwoodoo);
 
         getSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveEditedSettings();
+            }
+        });
+
+        getAppwoodoo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.appwoodoo.com";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 
