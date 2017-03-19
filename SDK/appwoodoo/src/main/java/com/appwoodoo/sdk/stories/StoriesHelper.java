@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.appwoodoo.sdk.io.StoriesApiHandler;
 import com.appwoodoo.sdk.model.Story;
 import com.appwoodoo.sdk.model.StoryWall;
+import com.appwoodoo.sdk.state.State;
 import com.appwoodoo.sdk.storage.SharedPreferencesHelper;
 
 public class StoriesHelper {
@@ -25,6 +26,7 @@ public class StoriesHelper {
     }
 
     public void init(Context context) {
+        State.getInstance().setPackageName(context);
         SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
         StoriesApiHandler.getStoryData(sp);
     }

@@ -9,6 +9,7 @@ import com.appwoodoo.sdk.BuildConfig;
 import com.appwoodoo.sdk.WoodooDialogDelegate;
 import com.appwoodoo.sdk.io.DialogsApiHandler;
 import com.appwoodoo.sdk.model.Dialog;
+import com.appwoodoo.sdk.state.State;
 import com.appwoodoo.sdk.storage.SharedPreferencesHelper;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class DialogsHelper {
     }
 
     public void init(Context context) {
+        State.getInstance().setPackageName(context);
         SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
         DialogsApiHandler.getDialogData(sp, null);
     }

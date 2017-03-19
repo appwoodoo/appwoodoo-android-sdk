@@ -12,9 +12,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import com.appwoodoo.sdk.BuildConfig;
+import com.appwoodoo.sdk.state.State;
 
 public class HttpsClient {
 
@@ -91,7 +95,7 @@ public class HttpsClient {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace();
             }
-            // URL should be hard-coded in the SDK, so we we shouldn't ever be here.
+            // URL should be hard-coded in the SDK, so we shouldn't ever be here.
             // Therefore there is no way to recover from this.
             throw new IOException();
         }
@@ -101,10 +105,15 @@ public class HttpsClient {
         httpurlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
         httpurlConnection.setReadTimeout(SOCKET_TIMEOUT);
 
+        if (State.getInstance().getPackageName() != null) {
+            httpurlConnection.setRequestProperty("Appwoodoo-Package", "" + State.getInstance().getPackageName());
+        }
+        httpurlConnection.setRequestProperty("Appwoodoo-Version", "" + BuildConfig.VERSION_CODE);
+
         return httpurlConnection;
     }
 
-    public byte[] bytesDataFromParameters(Map<String,Object> params) throws UnsupportedEncodingException {
+    private byte[] bytesDataFromParameters(Map<String, Object> params) throws UnsupportedEncodingException {
         byte[] postDataBytes;
 
         StringBuilder postData = new StringBuilder();

@@ -1,6 +1,6 @@
 # Appwoodoo Android SDK
 
-`v3.2.1`
+`v3.2.2`
 
 Appwoodoo is the simplest way to add an admin panel to existing or new apps, to edit their content.
 
@@ -25,7 +25,7 @@ Adding Appwoodoo to any Android app is as simple as adding these two lines to th
 ```java
 dependencies {
     compile 'com.google.android.gms:play-services-gcm:10.2.0'
-    compile 'com.appwoodoo:appwoodoo:3.2.0'
+    compile 'com.appwoodoo:appwoodoo:3.2.2'
     ...
 }
 ```
@@ -43,6 +43,7 @@ See the [full documentation](http://www.appwoodoo.com/docs/android_quick_start/)
 
 ## Recent version highlights
 
+* `3.2.2`: Package and Appwoodoo version deprecation
 * `3.2.1`: New example app
 * `3.0.1`: Initial StoryWall feature
 * `2.6.0`: Support to set your own notification sounds

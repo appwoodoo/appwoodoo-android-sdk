@@ -3,6 +3,7 @@ package com.appwoodoo.sdk.io;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import com.appwoodoo.sdk.BuildConfig;
 import com.appwoodoo.sdk.model.ApiResponse;
 import com.appwoodoo.sdk.model.StoryWall;
 import com.appwoodoo.sdk.state.Config;
@@ -25,6 +26,9 @@ public class StoriesApiHandler {
 				try {
 					return HttpsClient.getInstance().doGetRequest(url);
 				} catch (IOException e) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace();
+                    }
                     return null;
 				}
 			}

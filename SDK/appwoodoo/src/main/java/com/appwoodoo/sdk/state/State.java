@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 
 import com.appwoodoo.sdk.model.RemoteSetting;
@@ -17,6 +18,7 @@ public class State {
 	private String notificationTitle;
 	private Integer notificationResourceId;
 	private String notificationSound;
+	private String packageName;
 
 	private ArrayList<RemoteSetting> settings;
 	private boolean settingsArrived = false;
@@ -41,7 +43,15 @@ public class State {
 	public void setAppKey(String appKey) {
 		this.appKey = appKey;
 	}
-	
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(Context context) {
+		packageName = context.getPackageName();
+	}
+
 	public String getGcmSender(Context context) {
 		if (gcmSender == null) {
 			SharedPreferences sp = SharedPreferencesHelper.getInstance().getSharedPreferences(context);
